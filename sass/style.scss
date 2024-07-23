@@ -1,0 +1,337 @@
+/*
+Theme Name: Thème de Nathalie Mota - Motaphoto
+Author: Nathalie Mota
+Description: Thème personnalisé pour un site de photographe professionnelle dans l’événementiel
+Version: 1.0
+Text Domain: mota
+*/
+
+// Sass reconnait que les fichiers partiels grâce à @import
+// le nom seul suffit, plus besoin de underscore ni extension
+@import "fonts";
+@import "variables";
+
+// * {
+//     box-sizing: border-box;
+// }
+
+a {
+    text-decoration: none;
+    color: #000000;
+}
+body {
+    max-width: 1440px;
+    margin: 0 auto;
+    // padding: 0 20px;
+    font-family: 'SpaceMono', Arial, sans-serif;
+    color: #000000;
+}
+.custom-logo-link {
+    display: flex;
+    // align-items: center;
+}
+.menu-principal {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 80px;
+    padding: 0 146px;
+    text-transform: uppercase;
+    box-shadow: 0px 4px 14px 10px rgba(0, 0, 0, 0.03); 
+}
+.nav {
+    &__logo img {
+        max-width: 216px;
+        max-height: 14px;
+    }
+    &__menu {
+        display: flex;
+        gap: 45px;
+        // width: 100%;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+}
+.hero {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url("http://localhost:10047/wp-content/uploads/nathalie-2.jpeg.webp");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    & .contour {
+        text-align: center;
+        font-family: var(--font-space-mono-bold-italic);
+        font-size: 6rem;
+        font-weight: 700;
+        font-style: italic;
+        line-height: normal; 
+        text-transform: uppercase;
+        color: transparent;
+        -webkit-text-stroke: 3px white;
+        @supports not (-webkit-text-stroke: 2px white) {
+            color: white;
+        }
+    }
+}
+.menu-secondaire {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    text-transform: uppercase;
+    border-top: 1px solid #000000;
+}
+.nav {
+    &__menu {
+        display: flex;
+        justify-content: center;
+        gap: 86px;
+        // width: 100%;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+}
+
+// conteneur principal du corps de page
+.conteneur {
+    max-width: 1150px;
+    margin: 0 auto;
+}
+
+// Catalogue photos -> Template-part catalogue-photos.php
+.filtres {
+    display: flex;
+}
+.menu-deroulant {
+    width: 260px;
+    height: 45px;
+    border: 1px solid #B8BBC2;
+    border-radius: 8px;
+}
+.galerie {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(250px, 1fr));
+    gap: 20px;
+    &__item {
+        margin: 0;
+        // overflow: hidden;
+        aspect-ratio: 564 / 465;
+        &--img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Remplit le conteneur en gardant le ratio */
+        }
+    }
+}
+
+// Page d'info d'une photo -> single.php
+.single-conteneur {
+    max-width: 1150px;
+    margin: 0 auto;
+}
+.single-haut {
+    display: flex;
+    margin-top: 38px;
+    gap: 20px;
+    &__info {
+        display: flex;
+        flex-direction: column;
+        justify-content: end;
+        width: 50%;
+        height: auto;
+        gap: 20px;
+        text-transform: uppercase;
+        border-bottom: 1px solid #000000;
+        & h1 {
+            width: 60%;
+            font-family: var(--font-space-mono-bold-italic);
+            font-size: 66px;
+            font-weight: 400;
+            font-style: italic;
+            line-height: 58px;
+            margin: 0;
+        }
+        & p {
+            margin: 0;
+            font-size: 14px;
+        }
+        & .annee {
+            margin-bottom: 37px;
+        }
+    }
+    &__photo {
+        display: flex;
+        flex-direction: column;
+        justify-content: end;
+        width: 50%;
+        margin: 0;
+        &--grande {
+            width: 100%;
+            height: auto;
+        }
+    }
+}
+.single-milieu {
+    display: flex;
+    gap: 20px;
+    border-bottom: 1px solid #000000;
+    &__contact {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 50%;
+        padding: 35px 0;
+        & p {
+            font-family: var(--font-poppins-light);
+            font-size: 14px;
+            font-weight: 300;
+            font-style: normal;
+        }
+        & button {
+            font-family: var(--font-space-mono-regular);
+            font-size: 12px;
+            font-weight: 400;
+            font-style: normal;
+            display: flex;
+            width: 272px;
+            height: 50px;
+            padding: 8px 15px;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0; 
+            border-radius: 2px;
+            background: #D8D8D8;
+            box-shadow: 0px 2px 1px 0px rgba(0, 0, 0, 0.02);
+        }
+    }
+    &__photo {
+        display: flex;
+        justify-content: end;
+        width: 50%;
+        &--vignette {
+            display: flex;
+            flex-direction: column;
+            padding-top: 10px;
+            & .miniature {
+                width: 80px;
+                height: 70px;
+                aspect-ratio: 80 / 70;
+                & img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+            }
+            & .fleches {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%;
+                height: auto;
+                & img {
+                    width: 33%;
+                }
+            }
+        }
+    }
+}
+.single-bas {
+    margin: 77px 0 110px 0;
+    & h2 {
+        font-family: var(--font-space-mono-regular);
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 400;
+        margin-bottom: 50px;
+    }
+
+}
+
+/* __________-Responsive-__________ */
+@media only screen and (max-width: 992px) {
+    body {
+        max-width: 100%;
+        padding: 0 20px;
+    }
+}
+@media only screen and (max-width: 768px) {
+    body {
+        max-width: 100%;
+        padding: 0 15px;
+    }
+}
+@media only screen and (max-width: 600px) {
+    body {
+        max-width: 100%;
+        padding: 0 10px;
+    }
+}
+
+
+// body {
+//     font-family: 'Arial', sans-serif;
+//     margin: 0;
+//     color: #000000;
+// }
+
+// main, footer > p, body > h1, .menu {
+//     width: 1000px;
+//     margin-left: auto;
+//     margin-right: auto;
+// }
+
+// main figure {
+//     margin-left: 0;
+//     margin-right: 0;
+// }
+
+// footer, div[class^="menu"] {
+//     background-color: #eee;
+//     padding-top: 10px;
+//     padding-bottom: 10px;
+// }
+
+// ul.menu {
+//     padding-left: 0;
+//     list-style-type: none;
+// }
+
+// .menu-item {
+//     display: inline-block;
+//     margin-right: 20px;
+// }
+
+// .menu a, article a {
+//     text-decoration: none;
+//     color: #333;
+// }
+
+// .menu a:hover, article a:hover {
+//     color: #f15d22;
+// }
+
+// article {
+//     width: 300px;
+//     margin-top: 30px;
+// }
+
+// #accueil {
+//     display: flex;
+//     flex-wrap: wrap;
+//     justify-content: space-between;
+// }
+
+// footer {
+//     margin-top: 30px;
+// }
+
+// article img:hover {
+//     opacity: 0.8;
+//     transition: opacity 0.3s ease;
+// }
