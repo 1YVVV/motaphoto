@@ -8,6 +8,8 @@
             ));
             ?>
         </nav>
+        <!-- Modale du formulaire de contact -->
+        <?php get_template_part("template-parts/formulaire-contact"); ?>
         <!-- Ajout de la barre d'outils du tableau de bord (avec wp_head()) -->
         <?php wp_footer() ?>
     </body>
