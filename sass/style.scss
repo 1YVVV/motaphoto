@@ -190,6 +190,7 @@ body {
 
 
 // Catalogue photos -> Template-part catalogue-photos.php
+
 // Conteneur flex des filtres
 .filtres {
     display: flex;
@@ -226,6 +227,7 @@ body {
         padding: 11px 18px;
         border: 1px solid #B8BBC2;
         border-radius: 8px;
+        transition: border-color 0.3s ease;
         & span {
             text-transform: uppercase;
         }
@@ -235,7 +237,14 @@ body {
             border-left: 5px solid transparent;
             border-right: 5px solid transparent;
             border-top: 5px solid #000;
+            transition: transform 0.3s ease;
         }
+    }
+    &.open .select-filtre__option {
+        border: 1px solid blue;
+    }
+    &.open .fleche {
+        transform: rotate(180deg);
     }
     &__liste-options {
         position: absolute;
@@ -275,9 +284,22 @@ body {
 .select-filtre.open .select-filtre__liste-options {
     display: flex;
 }
-// .bordure-haute {
-//     border-radius: 8px 8px 0px 0px;
-// }
+// Gestion des bordures des selecteurs
+// Quand le menu est ouvert, on enlève les coins arrondis du bas
+.select-filtre.open .select-filtre__option {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+// Le dernier élément de la liste a les coins du bas arrondis
+.select-filtre .choix-option:last-child {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+// Lorsque le dernier élément est survolé, il garde ses coins arrondis
+.select-filtre .choix-option:last-child:hover {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
 
 // Galerie photos
 #galerie-photos {
@@ -390,7 +412,19 @@ body {
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        max-width: 50%;
+        // max-width: 50%;
+        &.portrait {
+            max-width: 28%;
+            max-height: 28%;
+        }
+        &.paysage {
+            max-width: 60%;
+            max-height: 60%;
+        }
+        &.carre {
+            max-width: 50%;
+            max-height: 50%;
+        }
     }
     &__photo {
         width: 100%;

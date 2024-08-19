@@ -20,6 +20,33 @@ function lightbox() {
         };
     });
 
+    // Détection du format de l'image
+    function setImageOrientationClass(img, container) {
+        // Crée un nouvel objet Image
+        const image = new Image();
+        image.src = img.src;
+
+        // Attend que l'image soit complètement chargée
+        image.onload = function() {
+            const ratio = image.width / image.height;
+            // Seuil pour le format carré ou presque carré
+            const closeToSquare = Math.abs(ratio - 1) < 0.35; 
+
+            if (image.width > image.height) {
+                if (closeToSquare) {
+                    container.classList.add("carre");
+                    container.classList.remove("portrait", "paysage");
+                } else {
+                    container.classList.add("paysage");
+                    container.classList.remove("portrait", "carre");
+                }
+            } else {
+                container.classList.add("portrait");
+                container.classList.remove("paysage", "carre");
+            }
+        };
+    }
+
     // Ouverture de la Lightbox
     photos.forEach((element, index) => {
         element.addEventListener("click", function() {
@@ -32,6 +59,9 @@ function lightbox() {
             contenuLightbox.src = photoActuelle.src;
             lightboxReference.textContent = photoActuelle.reference;
             lightboxCategorie.textContent = photoActuelle.categorie;
+
+             // Applique les classes CSS en fonction de l'orientation
+             setImageOrientationClass(contenuLightbox, lightbox.querySelector(".lightbox__contenu"));
         });
     });
 
@@ -44,6 +74,9 @@ function lightbox() {
             contenuLightbox.src = photoActuelle.src;
             lightboxReference.textContent = photoActuelle.reference;
             lightboxCategorie.textContent = photoActuelle.categorie;
+
+            // Applique les classes CSS en fonction de l'orientation
+            setImageOrientationClass(contenuLightbox, lightbox.querySelector(".lightbox__contenu"));
         }
     });
 
@@ -56,6 +89,9 @@ function lightbox() {
             contenuLightbox.src = photoActuelle.src;
             lightboxReference.textContent = photoActuelle.reference;
             lightboxCategorie.textContent = photoActuelle.categorie;
+
+            // Applique les classes CSS en fonction de l'orientation
+            setImageOrientationClass(contenuLightbox, lightbox.querySelector(".lightbox__contenu"));
         }
     });
 

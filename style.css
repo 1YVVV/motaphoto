@@ -286,6 +286,7 @@ body {
   padding: 11px 18px;
   border: 1px solid #B8BBC2;
   border-radius: 8px;
+  transition: border-color 0.3s ease;
 }
 .select-filtre__option span {
   text-transform: uppercase;
@@ -296,6 +297,13 @@ body {
   border-left: 5px solid transparent;
   border-right: 5px solid transparent;
   border-top: 5px solid #000;
+  transition: transform 0.3s ease;
+}
+.select-filtre.open .select-filtre__option {
+  border: 1px solid blue;
+}
+.select-filtre.open .fleche {
+  transform: rotate(180deg);
 }
 .select-filtre__liste-options {
   position: absolute;
@@ -333,6 +341,21 @@ body {
 
 .select-filtre.open .select-filtre__liste-options {
   display: flex;
+}
+
+.select-filtre.open .select-filtre__option {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.select-filtre .choix-option:last-child {
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+.select-filtre .choix-option:last-child:hover {
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
 }
 
 #galerie-photos {
@@ -443,7 +466,18 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+.lightbox__contenu.portrait {
+  max-width: 28%;
+  max-height: 28%;
+}
+.lightbox__contenu.paysage {
+  max-width: 60%;
+  max-height: 60%;
+}
+.lightbox__contenu.carre {
   max-width: 50%;
+  max-height: 50%;
 }
 .lightbox__photo {
   width: 100%;

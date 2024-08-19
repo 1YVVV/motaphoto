@@ -37,6 +37,13 @@ document.addEventListener("DOMContentLoaded", function() {
             optionAffichee.addEventListener("click", function() {
                 select.classList.toggle("open");
             });
+
+            // Ferme le menu si on clique en dehors
+            document.addEventListener("click", function(event) {
+                if (!select.contains(event.target)) {
+                    select.classList.remove("open");
+                }
+            });
             
             // Sélection de l'option et mise à jour des photos
             options.forEach(option => {
@@ -125,12 +132,5 @@ document.addEventListener("DOMContentLoaded", function() {
                 }
             });
         }
-
-        // Ferme les menus déroulants lorsqu'on clique en dehors
-        $(document).on("click", function(event) {
-            if (!$(event.target).closest(".select-filtre").length) {
-                $(".select-filtre").removeClass("open");
-            }
-        });
     });
 });
