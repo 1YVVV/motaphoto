@@ -18,9 +18,11 @@ if ($requete_infos->have_posts()) {
         // Pointe le premier post lors du premier appel puis se déplace au suivant
         // utilisée pour itérer à travers les résultats d'une requête personnalisée
         $requete_infos->the_post();
+        // Récupération des champs personnalisés
         $annee = get_field("annee");
         $reference = get_field("reference");
         $type = get_field("type_photo");
+        // Récupération des taxonomies
         $categories = wp_get_post_terms(get_the_ID(), "categ");
         $formats = wp_get_post_terms(get_the_ID(), "format");
 ?>
@@ -30,14 +32,14 @@ if ($requete_infos->have_posts()) {
         <!-- Partie gauche information -->
         <article class="single-haut__info">
             <h1><?php echo the_title();?></h1>
-            <p>RÉFÉRENCE : <?php echo esc_html($reference); ?></p>
+            <p id="reference-photo" data-reference="<?php echo esc_html($reference); ?>">RÉFÉRENCE : <?php echo esc_html($reference); ?></p>
             <p>CATÉGORIE : 
                 <?php
                 if (is_array($categories)) {
                     foreach ($categories as $categorie) {
                         // Condition pour prévenir les erreurs,
                         // plus sécurisé et robuste avec le contrôle du type et l'existence de données 
-                        if (is_object($categorie) && property_exists($categorie, 'name')) {
+                        if (is_object($categorie) && property_exists($categorie, "name")) {
                             echo esc_html($categorie->name);
                         }
                     }
@@ -76,31 +78,35 @@ if ($requete_infos->have_posts()) {
 
     // Récupération de la photo suivante
     $next_post = get_posts(array(
-        'post_type' => 'photo', // Remplace par ton type de post personnalisé
-        'posts_per_page' => 1,
-        'meta_key' => 'annee', // Remplace par ton champ personnalisé si nécessaire
-        'orderby' => 'date',
-        'order' => 'ASC',
-        'date_query' => array(
-            array('after' => get_the_date('Y-m-d H:i:s', $current_id))
+        "post_type" => "photo", // Type de publication
+        "posts_per_page" => 1,
+        "meta_key" => "annee", // Champ personnalisé pour l'année
+        "orderby" => array(
+            "meta_value_num" => "ASC", // Tri par la valeur numérique du champ 'annee'
+            "date" => "ASC" // Puis tri par la date de publication
+        ),
+        "date_query" => array(
+            array("after" => get_the_date("Y-m-d H:i:s", $current_id))
         ),
     ));
-    $next_url = $next_post ? get_permalink($next_post[0]->ID) : '#';
-    $next_thumbnail = $next_post ? get_the_post_thumbnail_url($next_post[0]->ID, 'catalogue-miniature') : '';
+    $next_url = $next_post ? get_permalink($next_post[0]->ID) : "#";
+    $next_thumbnail = $next_post ? get_the_post_thumbnail_url($next_post[0]->ID, "catalogue-miniature") : "";
 
     // Récupération de la photo précédente
     $prev_post = get_posts(array(
-        'post_type' => 'photo',
-        'posts_per_page' => 1,
-        'meta_key' => 'annee',
-        'orderby' => 'date',
-        'order' => 'DESC',
-        'date_query' => array(
-            array('before' => get_the_date('Y-m-d H:i:s', $current_id))
+        "post_type" => "photo",
+        "posts_per_page" => 1,
+        "meta_key" => "annee",
+        "orderby" => array(
+            "meta_value_num" => "DESC", // Tri par la valeur numérique du champ 'annee'
+            "date" => "DESC" // Puis tri par la date de publication
+        ),
+        "date_query" => array(
+            array("before" => get_the_date("Y-m-d H:i:s", $current_id))
         ),
     ));
-    $prev_url = $prev_post ? get_permalink($prev_post[0]->ID) : '#';
-    $prev_thumbnail = $prev_post ? get_the_post_thumbnail_url($prev_post[0]->ID, 'catalogue-miniature') : '';
+    $prev_url = $prev_post ? get_permalink($prev_post[0]->ID) : "#";
+    $prev_thumbnail = $prev_post ? get_the_post_thumbnail_url($prev_post[0]->ID, "catalogue-miniature") : "";
     ?>
 
     <section class="single-milieu">
@@ -116,10 +122,10 @@ if ($requete_infos->have_posts()) {
                     <img src="<?php echo esc_url(get_the_post_thumbnail_url($current_id, 'catalogue-miniature')); ?>" alt="Miniature actuelle">
                 </figure>
                 <div class="fleches">
-                    <a href="<?php echo esc_url($prev_url); ?>" class="fleche" data-direction="precedente" data-preview-url="<?php echo esc_url($prev_thumbnail); ?>">
+                    <a href="<?php echo esc_url($prev_url); ?>" class="fleche" data-direction="precedente" data-apercu-url="<?php echo esc_url($prev_thumbnail); ?>">
                         <img src="<?php echo get_theme_file_uri("assets/images/icones/fleche-gauche.svg"); ?>" alt="Flèche gauche">
                     </a>
-                    <a href="<?php echo esc_url($next_url); ?>" class="fleche" data-direction="suivante" data-preview-url="<?php echo esc_url($next_thumbnail); ?>">
+                    <a href="<?php echo esc_url($next_url); ?>" class="fleche" data-direction="suivante" data-apercu-url="<?php echo esc_url($next_thumbnail); ?>">
                         <img src="<?php echo get_theme_file_uri("assets/images/icones/fleche-droite.svg"); ?>" alt="Flèche droite">
                     </a>
                 </div>
@@ -164,13 +170,13 @@ if ($requete_infos->have_posts()) {
 						$requete_photos->the_post();
                         // Définir les variables à passer au template part
                         $titre = get_the_title();
-                        $categories = wp_get_post_terms(get_the_ID(), 'categ');
-                        $categorie = !empty($categories) ? $categories[0]->name : 'Catégorie par défaut';
+                        $categories = wp_get_post_terms(get_the_ID(), "categ");
+                        $categorie = !empty($categories) ? $categories[0]->name : "Catégorie par défaut";
                         $photo_id = get_the_ID();
 						// Affiche les photos trouvées
 						echo "<figure class='conteneur-photo'>";
-						the_post_thumbnail("catalogue", ["class" => "conteneur-photo__img"]); 
-						include locate_template('template-parts/overlay-photo.php');
+						the_post_thumbnail("catalogue", ["class" => "conteneur-photo__photo"]); 
+						include locate_template("template-parts/overlay-photo.php");
                         echo "</figure>";
 					}
 					// Réinitialise les données post après la boucle personnalisée

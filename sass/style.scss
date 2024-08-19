@@ -11,10 +11,6 @@ Text Domain: mota
 @import "fonts";
 @import "variables";
 
-// * {
-//     box-sizing: border-box;
-// }
-
 a {
     text-decoration: none;
     color: #000000;
@@ -22,43 +18,53 @@ a {
 body {
     max-width: 1440px;
     margin: 0 auto;
-    // padding: 0 20px;
+    padding-top: 80px;
     font-family: 'SpaceMono', Arial, sans-serif;
     color: #000000;
+    box-shadow: 0px 4px 14px 10px rgba(0, 0, 0, 0.03);
 }
 .custom-logo-link {
     display: flex;
-    // align-items: center;
 }
 .menu-principal {
+    position: fixed;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    top: 0;
+    max-width: 1440px;
+    width: 100%;
     height: 80px;
     padding: 0 146px;
     text-transform: uppercase;
-    box-shadow: 0px 4px 14px 10px rgba(0, 0, 0, 0.03); 
-}
-.nav {
-    &__logo img {
-        max-width: 216px;
-        max-height: 14px;
+    background-color: #FFF;
+    box-shadow: 0px 4px 14px 10px rgba(0, 0, 0, 0.03);
+    z-index: 1000;
+    box-sizing: border-box;
+    & .nav {
+        &__logo img {
+            max-width: 216px;
+            max-height: 14px;
+        }
+        &__menu {
+            display: flex;
+            gap: 45px;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            // & a:hover {
+            //     font-weight: 700;
+            //     transition: 0.5s ease;
+            // }
+        }
     }
-    &__menu {
-        display: flex;
-        gap: 45px;
-        // width: 100%;
-        list-style: none;
-        padding: 0;
-        margin: 0;
-    }
 }
+
 .hero {
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    // background-image: url("http://localhost:10047/wp-content/uploads/nathalie-2.jpeg.webp");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -72,7 +78,7 @@ body {
         text-transform: uppercase;
         color: transparent;
         -webkit-text-stroke: 3px white;
-        @supports not (-webkit-text-stroke: 2px white) {
+        @supports not (-webkit-text-stroke: 3px white) {
             color: white;
         }
     }
@@ -81,19 +87,18 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 40px;
+    min-height: 40px;
     text-transform: uppercase;
     border-top: 1px solid #000000;
-}
-.nav {
-    &__menu {
-        display: flex;
-        justify-content: center;
-        gap: 86px;
-        // width: 100%;
-        list-style: none;
-        padding: 0;
-        margin: 0;
+    & .nav {
+        &__menu {
+            display: flex;
+            justify-content: center;
+            gap: 86px;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
     }
 }
 
@@ -104,92 +109,85 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    display: flex;
     justify-content: center;
     align-items: center;
-    // z-index: 1000;
-    // display: none;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 1011;
+    display: none;
     &__contenu {
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         max-width: 600px;
-        max-height: 770px;
+        width: 100%;
+        padding-bottom: 10px;
         border: 5px solid #000;
         box-sizing: border-box;
         background-color: #ffffff;
+        z-index: 1001;
     }
     &__entete {
         margin-top: 20px;
-        position: relative;
         --img {
             width: 100%;
         }
     }
     &__formulaire {
-        margin-top: 30px;
+        position: relative;
         max-width: 260px;
         width: 100%;
+        margin-top: 20px;
     }
 }
-
 // Formulaire CF7 - Formulaire de contact 1
 .wpcf7-form {
-    font-family: 'poppins';
-    // max-width: 600px;
+    width: 100%;
+    font-family: var(--font-poppins-regular);
+    font-weight: 500;
+    color: #313144;
+    & p {
+        margin: 25px 0 0 0;
+    }
 }
-
-// .formulaireCF7 {
-//     width: 15em;
-// }
-
 .wpcf7-text {
-    width: 100%;
     height: 40px;
-    border-radius: 8px;
-    border: 1px solid #B8BBC2;
-    box-sizing: border-box;
-    // font-size: large;
 }
-.wpcf7-textarea {
+.wpcf7-text, .wpcf7-textarea {
     width: 100%;
     border-radius: 8px;
+    padding: 10px;
     border: 1px solid #B8BBC2;
     box-sizing: border-box;
-    // font-size: large;
 }
 .wpcf7-submit {
     width: 100%;
     padding: 15px;
+    margin-bottom: 10px !important;
     font-family: 'SpaceMono', sans-serif;
-    border-radius: 4px;
+    border-radius: 2px;
     border: none;
     box-sizing: border-box;
+    cursor: pointer;
     background-color: #D8D8D8;
 }
+.wpcf7-response-output {
+    position: absolute;
+    bottom: 0;
+    margin: 0 !important;
+    font-size: 10px;
+}
 
-// .wpcf7-response-output {    
-//     width: 70%;
-// }
-
-// .modale .close {
-//     position: absolute;
-//     top: 10px;
-//     right: 10px;
-//     cursor: pointer;
-//     font-size: 24px;
-//     color: #000;
-// }
-// .modale.show {
-//     display: flex;
-// }
 
 // conteneur principal du corps de page
 .conteneur {
     max-width: 1150px;
     margin: 0 auto;
 }
+.conteneur h2 {
+    text-align: center;
+}
+
 
 // Catalogue photos -> Template-part catalogue-photos.php
 // Conteneur flex des filtres
@@ -206,7 +204,6 @@ body {
         justify-content: flex-end;
     }
 }
-
 // Sélecteur personnalisé pour les menus déroulants des filtres
 .select-filtre {
     position: relative;
@@ -257,6 +254,13 @@ body {
             &:hover {
                 background-color: #FFD6D6;
             }
+            &:focus, &:active {
+                background-color: #FE5858;
+            }
+            &.selected {
+                background-color: #E00000; /* Rouge foncé pour l'élément sélectionné */
+                color: #FFF;
+            }
         }
         & .option-vide {
             height: 40px;
@@ -287,7 +291,7 @@ body {
     margin: 0;
     overflow: hidden;
     aspect-ratio: 564 / 495;
-    &__img {
+    &__photo {
         flex: 1;
         width: 100%;
         height: 100%;
@@ -305,7 +309,6 @@ body {
         font-family: var(--font-poppins-regular);
         font-size: 14px;
         font-weight: 500;
-        font-style: normal;
         text-transform: uppercase;
         color: white;
         pointer-events: none; /* Assure que les éléments de l'overlay n'interfèrent pas avec les événements de survol */
@@ -357,8 +360,14 @@ body {
         gap: 10px;
         flex-shrink: 0;
         border-radius: 2px;
+        border: none;
+        cursor: pointer;
         background: #D8D8D8;
-        box-shadow: 0px 2px 1px 0px rgba(0, 0, 0, 0.02);
+        &:hover {
+            color: #FFF;
+            background: #000;
+            transition: 0.3s ease;
+        }
     }
 }
 
@@ -366,26 +375,68 @@ body {
 .lightbox {
     position: fixed;
     top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.8);
+    left: 0;     
     display: flex;
     justify-content: center;
     align-items: center;
-    display: none; /* Masquer par défaut */
-}
-.lightbox__img {
-    max-width: 90%;
-    max-height: 80%;
-}
-.lightbox__close {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 2rem;
+    width: 100%;
+    height: 100%;
     color: white;
-    cursor: pointer;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+    display: none;
+    &__contenu {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        max-width: 50%;
+    }
+    &__photo {
+        width: 100%;
+        object-fit: contain;
+    }
+    &__details {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        margin-top: 20px;
+        font-family: var(--font-poppins-regular);
+        font-size: 14px;
+        font-weight: 500;
+        text-transform: uppercase;
+        &--reference {
+            text-align: left;
+        }
+        &--categorie {
+            text-align: right;
+        }
+    }
+    &__fleche {
+        display: flex;
+        margin: 0 5%;
+        gap: 8px;
+        color: white;
+        cursor: pointer;
+        z-index: 1001;
+        & p {
+            font-size: 12px;
+        }
+        &--gauche {
+            left: 10px;
+        }
+        &--droite {
+            right: 10px;
+        }
+    }
+    &__close {
+        position: absolute;
+        top: 50px;
+        right: 50px;
+        font-size: 2rem;
+        color: white;
+        cursor: pointer;
+    }
 }
 
 
@@ -421,7 +472,7 @@ body {
             font-size: 14px;
         }
         & .annee {
-            margin-bottom: 37px;
+            margin-bottom: 38px;
         }
     }
     &__photo {
@@ -447,6 +498,7 @@ body {
         width: 50%;
         padding: 35px 0;
         & p {
+            padding-right: 20px;
             font-family: var(--font-poppins-light);
             font-size: 14px;
             font-weight: 300;
@@ -462,8 +514,14 @@ body {
             justify-content: center;
             align-items: center;
             border-radius: 2px;
+            border: none;
+            cursor: pointer;
             background: #D8D8D8;
-            box-shadow: 0px 2px 1px 0px rgba(0, 0, 0, 0.02);
+            &:hover {
+                color: #FFF;
+                background: #000;
+                transition: 0.3s ease;
+            }
         }
     }
     &__photo {
@@ -481,8 +539,9 @@ body {
                 & img {
                     width: 100%;
                     height: 100%;
-                    transition: opacity 0.1s ease-in-out;
+                    transition: opacity 0.2s ease-in-out;
                     opacity: 1;
+                    object-fit: cover;
                 }
                 & img.hidden {
                     opacity: 0;
@@ -499,13 +558,13 @@ body {
                     justify-content: center;
                     align-items: center;
                     width: 33%;
-                    transition: transform 0.3s ease;
+                    transition: transform 0.2s ease;
                     &:hover {
                         transform: scale(1.1);
                         opacity: 0.8;
                     }
                     & img {
-                        transition: transform 0.5s ease forwards;
+                        transition: transform 0.2s ease forwards;
                     }
                 }
             }
@@ -523,22 +582,243 @@ body {
     }
 }
 
+
 /* __________-Responsive-__________ */
-@media only screen and (max-width: 992px) {
-    body {
+.menu-burger {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 28px;
+    height: 20px;
+    cursor: pointer;
+    & span {
+        position: relative;
+        display: block;
+        height: 3px;
+        background-color: #000;
+        transition: all 0.3s ease;
+    }
+}
+// Transforme les barres en croix lorsque le menu est actif
+.menu-burger.actif span:nth-child(1) {
+    transform: rotate(45deg);
+    top: 10px;
+}
+.menu-burger.actif span:nth-child(2) {
+    opacity: 0;
+}
+.menu-burger.actif span:nth-child(3) {
+    transform: rotate(-45deg);
+    top: -7px;
+}
+// Menu latéral
+.menu-lateral {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    top: 80px;
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 80px);
+    font-size: 44px;
+    line-height: 2;
+    background-color: #E00000; /* Fond rouge */
+    transition: transform 0.3s ease-in-out; /* Transition pour glisser le menu */
+    z-index: 1010;
+    transform: translateX(100%);
+    & ul {
+        padding: 0;
+        list-style: none;
+    }
+    & a {
+        color: white;
+    }
+}
+// // Au clic sur la croix on affiche le menu
+.menu-lateral.actif {
+    transform: translateX(0);
+}
+
+// Mediaqueries
+@media only screen and (max-width: 1440px) {
+    .menu-principal {
         max-width: 100%;
-        padding: 0 20px;
+        padding: 0 30px;
+    }
+}
+@media only screen and (max-width: 1200px) {
+    .conteneur, .menu-principal {
+        max-width: 100%;
+        padding: 0 30px;
+    }
+    .hero {
+        height: 60vh;
+        & .contour {
+            font-size: 6rem;
+            margin: 0 60px;
+        }
+    }
+}
+@media only screen and (max-width: 920px) {
+    .menu-principal .main-menu {
+        display: none; /* Cache le menu principal */
+    }
+    .menu-burger {
+        display: flex; /* Affiche le menu burger */
+    }
+    .filtres {
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        margin: 30px 0;
+        &__taxonomie {
+            flex-direction: column;
+            gap: 8px;
+        }
+        &__tri {
+            flex-direction: column;
+        }
     }
 }
 @media only screen and (max-width: 768px) {
-    body {
-        max-width: 100%;
-        padding: 0 15px;
+    .menu-principal {
+        padding: 0 40px;
+    }
+    .hero {
+        height: 30vh;
+        padding: 0 10vw;
+        & .contour {
+            flex: 1;
+            width: 100%;
+            font-size: 8vw;
+            line-height: 1.2;
+            white-space: nowrap;
+            -webkit-text-stroke: 1px white;
+            @supports not (-webkit-text-stroke: 1px white) {
+                color: white;
+            }
+        }
+    }
+    #galerie-photos {
+        display: flex;
+        flex-direction: column;
+        padding: 0 80px;
+    }
+    .menu-secondaire {
+        padding: 45px 0;
+        & .nav {
+            &__menu {
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 24px;
+            }
+        }
+    }
+    .single-conteneur, .conteneur {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+    .single-haut {
+    flex-direction: column-reverse;
+    gap: 15px;
+    margin-top: 20px;
+    padding: 0 55px;
+    border-bottom: 1px solid #000000;
+    &__info {
+        width: 100%;
+        gap: 15px;
+        border-bottom: none;
+        & h1 {
+            font-size: 46px;
+            line-height: 48px;
+        }
+    }
+    &__photo {
+        width: 80%;
+        // &--grande {
+        //     max-height: 60vh;
+        //     width: auto; /* Garde la largeur proportionnelle à la hauteur */
+        //     object-fit: contain;
+        // }
+    }
+    }
+    .single-milieu {
+        flex-direction: column;
+        
+        padding: 0 55px;
+        &__contact {
+            flex-direction: column;
+            width: 100%;
+            gap: 15px;
+            padding: 25px 0;
+            & p {
+                margin: 0;
+                padding: 0;
+            }
+            & button {
+                width: 263px;
+            }
+        }
+        &__photo {
+            display: none;
+        }
+    }
+    .single-bas {
+        text-align: center;
+        margin: 25px 0 20px 0;
+        padding: 0 30px;
+        & h2 {
+            margin-bottom: 20px;
+        }
+    }
+    .modale {
+        &__contenu {
+            max-width: 80%;
+            min-width: 300px;
+        }
+        &__entete {            
+            width: 100%;
+            height: auto;
+            margin-top: 20px;
+            text-align: center;
+            & img {
+                width: 100%;
+                height: auto;
+                object-fit: contain; // Empêche la déformation de l'image
+            }
+        }
+        &__formulaire {
+            margin: 0;
+        }
+    }
+    .wpcf7-form {
+        & p {
+            margin: 14px 0 0 0;
+        }
     }
 }
 @media only screen and (max-width: 600px) {
-    body {
-        max-width: 100%;
-        padding: 0 10px;
+    #galerie-photos {
+        padding: 0 30px;
     }
 }
+@media only screen and (max-width: 480px) {
+    .nav__logo img {
+        max-width: 138px;
+        height: auto;
+    }
+}
+@media only screen and (max-width: 350px) {
+    .menu-principal {
+        padding: 0 15px;
+    }
+}
+// Grandes tablettes / petits ordinateurs portables : @media (max-width: 992px)
+// Tablettes en mode portrait : @media (max-width: 768px)
+// Smartphones en mode paysage : @media (max-width: 576px)
+// Smartphones en mode portrait : @media (max-width: 480px)

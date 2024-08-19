@@ -21,8 +21,24 @@
             wp_nav_menu(array(
                 "theme_location" => "menu_principal",
                 "container" => "false",
-                "menu_class" => "nav__menu"
+                "menu_class" => "nav__menu main-menu"
             ))
+            ?>
+            <!-- Menu burger -->
+            <div class="menu-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+        <!-- Menu latéral -->
+        <nav class="menu-lateral">
+            <?php
+            wp_nav_menu(array(
+                'theme_location' => 'menu_principal',
+                'container' => false,
+                'menu_class' => 'nav__menu main-menu'
+            ));
             ?>
         </nav>
     </header>

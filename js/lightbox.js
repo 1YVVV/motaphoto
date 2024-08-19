@@ -1,38 +1,71 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // Gestion du clic sur l'œil pour afficher/masquer les textes
-    document.querySelectorAll('.conteneur-photo__overlay--oeil').forEach(function(oeil) {
-        oeil.addEventListener('click', function() {
-            const overlay = this.closest('.conteneur-photo__overlay');
-            const titre = overlay.querySelector('.conteneur-photo__overlay--titre');
-            const categorie = overlay.querySelector('.conteneur-photo__overlay--categorie');
-            
-            // Alterner la visibilité des textes
-            titre.style.display = (titre.style.display === 'block' || titre.style.display === '') ? 'none' : 'block';
-            categorie.style.display = (categorie.style.display === 'block' || categorie.style.display === '') ? 'none' : 'block';
+function lightbox() {
+
+    const photos = Array.from(document.querySelectorAll(".conteneur-photo__overlay--zoom")); // Sélection des éléments avec l'overlay zoom
+    const lightbox = document.querySelector(".lightbox");
+    const contenuLightbox = lightbox.querySelector(".lightbox__photo");
+    const lightboxReference = lightbox.querySelector(".lightbox__details--reference");
+    const lightboxCategorie = lightbox.querySelector(".lightbox__details--categorie");
+
+    let indexPhoto = -1;
+
+    // Tableau de stockage des informations relatives à chaque photo
+    const tableauPhotos = photos.map(element => {
+        const photoUrl = element.getAttribute("data-photo");
+        const referencePhoto = element.getAttribute("data-reference");
+        const categoriePhoto = element.getAttribute("data-categorie");
+        return {
+            src: photoUrl,
+            reference: referencePhoto,
+            categorie: categoriePhoto,
+        };
+    });
+
+    // Ouverture de la Lightbox
+    photos.forEach((element, index) => {
+        element.addEventListener("click", function() {
+            // Affichage de la Lightbox et configuration de l'index sélectionné
+            lightbox.style.display = "flex";
+            indexPhoto = index;
+
+            // Chargement des informations de la photo correspondante
+            const photoActuelle = tableauPhotos[indexPhoto];
+            contenuLightbox.src = photoActuelle.src;
+            lightboxReference.textContent = photoActuelle.reference;
+            lightboxCategorie.textContent = photoActuelle.categorie;
         });
     });
 
-    // Gestion du clic sur le zoom pour ouvrir la lightbox
-    document.querySelectorAll('.conteneur-photo__overlay--zoom').forEach(function(zoom) {
-        zoom.addEventListener('click', function() {
-            const lightbox = document.getElementById('lightbox');
-            const lightboxImg = lightbox.querySelector('.lightbox__img');
-            const imageSrc = this.closest('.conteneur-photo').querySelector('.conteneur-photo__img').src;
-            
-            lightboxImg.src = imageSrc;
-            lightbox.style.display = 'flex';
-        });
-    });
-
-    // Gestion de la fermeture de la lightbox
-    document.querySelector('.lightbox__close').addEventListener('click', function() {
-        document.getElementById('lightbox').style.display = 'none';
-    });
-
-    // Fermer la lightbox en cliquant en dehors de l'image
-    document.getElementById('lightbox').addEventListener('click', function(e) {
-        if (e.target === this) {
-            this.style.display = 'none';
+    // Navigation vers la photo suivante
+    const photoSuivante = lightbox.querySelector(".lightbox__fleche--droite");
+    photoSuivante.addEventListener("click", function() {
+        if (indexPhoto >= 0) {
+            indexPhoto = (indexPhoto + 1) % photos.length; // Incrémentation avec boucle
+            const photoActuelle = tableauPhotos[indexPhoto];
+            contenuLightbox.src = photoActuelle.src;
+            lightboxReference.textContent = photoActuelle.reference;
+            lightboxCategorie.textContent = photoActuelle.categorie;
         }
     });
-});
+
+    // Navigation vers la photo précédente
+    const photoPrecedente = lightbox.querySelector(".lightbox__fleche--gauche");
+    photoPrecedente.addEventListener("click", function() {
+        if (indexPhoto >= 0) {
+            indexPhoto = (indexPhoto - 1 + photos.length) % photos.length; // Décrémentation avec boucle
+            const photoActuelle = tableauPhotos[indexPhoto];
+            contenuLightbox.src = photoActuelle.src;
+            lightboxReference.textContent = photoActuelle.reference;
+            lightboxCategorie.textContent = photoActuelle.categorie;
+        }
+    });
+
+    // Fermeture de la Lightbox
+    function fermetureLightbox() {
+        lightbox.style.display = "none";
+        indexPhoto = -1;
+    }
+
+    // Attacher l'événement de fermeture de la Lightbox
+    document.querySelector(".lightbox__close").addEventListener("click", fermetureLightbox);
+}
+document.addEventListener("DOMContentLoaded", lightbox);

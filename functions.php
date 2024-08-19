@@ -13,18 +13,26 @@ function theme_enqueue_styles() {
 	// Chargement des styles principaux
     wp_enqueue_style("mota-style", get_theme_file_uri("style.css"));
     // Chargement des scripts du formulaire de contact
+    wp_enqueue_script("menu-burger", get_theme_file_uri("js/burger.js"), [], null, true);
+    // Chargement des scripts du formulaire de contact
     wp_enqueue_script("formulaire-contact", get_theme_file_uri("js/formulaire-contact.js"), ["jquery"], 1.0, true);
     // Chargement des scripts de l'overlay
     wp_enqueue_script("overlay", get_theme_file_uri("js/overlay.js"), ["jquery"], 1.0, true);
+    // Chargement des scripts de la lightbox
+    wp_enqueue_script("lightbox", get_theme_file_uri("js/lightbox.js"), ["jquery"], 1.0, true);
     // Chargement des scripts destinés aux filtres de la page d'accueil
     wp_enqueue_script("filtres", get_theme_file_uri("js/filtres.js"), ["jquery", "overlay"], 1.0, true);
     // Chargement des scripts d'affichage des miniatures de la single page
     wp_enqueue_script("single-miniature", get_theme_file_uri("js/single-miniature.js"), ["jquery"], 1.0, true);
-    // Localisation du script pour AJAX
+    // Localisation des scripts pour AJAX
     wp_localize_script("filtres", "my_ajax_object", array(
         "ajax_url" => admin_url("admin-ajax.php"),
         "nonce" => wp_create_nonce("my_ajax_nonce")
     ));
+    // wp_localize_script('overlay', 'my_ajax_object', array(
+    //     'ajax_url' => admin_url('admin-ajax.php'),
+    //     'nonce' => wp_create_nonce('my_ajax_nonce')
+    // ));
     // Chargement de Font Awesome
     // wp_enqueue_style('font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css', array(), null);
 }
@@ -80,7 +88,7 @@ function photo_hero($wp_customize) {
         "sanitize_callback" => "esc_url_raw", // Utiliser esc_url_raw pour l'URL de l'image
     ));
     // Ajouter un contrôle pour la photo
-    $wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, "controle_image_hero", array(
+    $wp_customize->add_control( new WP_Customize_Image_Control($wp_customize, "controle_image_hero", array(
         "label"    => __("Image Hero", "mota"),
         "section"  => "section_hero",
         "settings" => "image_hero",
@@ -89,10 +97,10 @@ function photo_hero($wp_customize) {
 add_action("customize_register", "photo_hero");
 
 // Seuil de taille des images téléversées
-function seuil_max_taille_images() {
+function seuil_max_taille_photos() {
     return 1920; // ou toute autre valeur en pixels
 }
-add_filter("big_image_size_threshold", "seuil_max_taille_images");
+add_filter("big_image_size_threshold", "seuil_max_taille_photos");
 
 // Les menus de navigation doivent être enregistrés à l'aide du hook init.
 // Le hook init est appelé après que WordPress a terminé le chargement des fichiers de configuration
@@ -173,7 +181,7 @@ function load_filtered_photos() {
 
             $html .= "<figure class='conteneur-photo'>";
             if (has_post_thumbnail()) {
-                $html .= get_the_post_thumbnail($photo_id, "catalogue", ["class" => "conteneur-photo__img"]);
+                $html .= get_the_post_thumbnail($photo_id, "catalogue", ["class" => "conteneur-photo__photo"]);
                 // Méthode efficace pour inclure dynamiquement du HTML généré 
                 // par des fichiers PHP dans votre réponse AJAX
                 // Capturez le contenu du template part
@@ -197,3 +205,4 @@ function load_filtered_photos() {
 }
 add_action("wp_ajax_load_filtered_photos", "load_filtered_photos");
 add_action("wp_ajax_nopriv_load_filtered_photos", "load_filtered_photos");
+

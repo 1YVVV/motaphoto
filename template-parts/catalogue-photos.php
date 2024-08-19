@@ -80,17 +80,18 @@ $photo_query = new WP_Query($args);
                 // Pointe le premier post lors du premier appel puis se déplace au suivant
                 // utilisée dans les thèmes WordPress pour itérer à travers les résultats d'une requête personnalisée
                 $photo_query->the_post();
-                // Définir les variables à passer au template part
+                // Définition des variables à passer au template part
                 $titre = get_the_title();
-                $categories = wp_get_post_terms(get_the_ID(), 'categ');
-                $categorie = !empty($categories) ? $categories[0]->name : 'Catégorie par défaut';
+                $reference = get_field("reference");
+                $categories = wp_get_post_terms(get_the_ID(), "categ");
+                $categorie = !empty($categories) ? $categories[0]->name : "Catégorie par défaut";
                 $photo_id = get_the_ID();
                 echo "<figure class='conteneur-photo'>";
                 if (has_post_thumbnail()) {
-                    // Affiche l'image mise en avant avec une taille personnalisée
-                    the_post_thumbnail("catalogue", ["class" => "conteneur-photo__img"]);
-                    // Inclure le template part avec des variables locales
-                    include locate_template('template-parts/overlay-photo.php');
+                    // Affichage de l'image mise en avant avec une taille personnalisée
+                    the_post_thumbnail("catalogue", ["class" => "conteneur-photo__photo"]);
+                    // Intégration du template part de l'overlay
+                    include locate_template("template-parts/overlay-photo.php");
                 }
                 else {
                     echo "<p>Aucune image mise en avant pour cette publication</p>";

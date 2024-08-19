@@ -5,10 +5,29 @@ document.addEventListener("DOMContentLoaded", function() {
     // On appelle la fonction importée lors du chargement initial
     initialisationOverlay();
 
+    // Gestion des événements pour les éléments .conteneur-photo__overlay--zoom
+    document.addEventListener("click", function(event) {
+        if (event.target.closest(".conteneur-photo__overlay--zoom")) {
+            ouvertureLightbox(event);
+        }
+    });
+
+
     // Selecteurs personnalisés
     jQuery(document).ready(function($) {
-        const filtre = document.querySelectorAll(".select-filtre");
-        
+        // Sélectionne toutes les options du filtre
+        const options = document.querySelectorAll('.select-filtre__liste-options .choix-option');
+        // Ajoute un événement de clic à chaque option
+        options.forEach(option => {
+            option.addEventListener('click', function() {
+                // Enlève la classe 'selected' de toutes les options
+                options.forEach(opt => opt.classList.remove('selected'));
+                // Ajoute la classe 'selected' à l'option cliquée
+                this.classList.add('selected');
+            });
+        });
+
+        const filtre = document.querySelectorAll(".select-filtre"); 
         // Initialisation des filtres
         filtre.forEach(select => {
             const optionAffichee = select.querySelector(".select-filtre__option");
@@ -85,8 +104,13 @@ document.addEventListener("DOMContentLoaded", function() {
                             // Sinon on ajoute les nouvelles photos
                             $("#galerie-photos").append(reponse.data);
                         }
+                        
                         // Réapplique les évènements d'overlay après la maj
                         initialisationOverlay();
+
+                        // Réinitialise la lightbox pour les nouvelles photos
+                        lightbox();
+
                     } else {
                         if (page === 1) {
                             $("#galerie-photos").html("<p>Aucune photo correspondante aux critères choisis</p>");

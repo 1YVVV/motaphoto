@@ -1,20 +1,21 @@
 jQuery(document).ready(function($) {
-    // Variable pour stocker la miniature actuelle
-    let miniatureActuelle = $(".miniature img").attr("src");
-    
+    let miniatureActuelle;
+
     // Lors du survol de la flèche
     $(".fleche").on("mouseover", function() {
+        // Récupérer et stocker l'URL actuelle de la miniature
+        miniatureActuelle = $(".miniature img").attr("src");
         // Récupérer l'URL de la miniature à prévisualiser depuis l'attribut data-preview-url
-        const previewUrl = $(this).data("preview-url");
+        const apercuUrl = $(this).data("apercu-url");
         // Vérifier si l'URL est définie
-        if (previewUrl) {
+        if (apercuUrl) {
             // Ajouter une classe pour l'animation de fade-out
             $(".miniature img").addClass("hidden");
             // Attendre la fin de la transition avant de
             // mettre à jour la miniature avec l'URL de prévisualisation
             setTimeout(function() {
-                $(".miniature img").attr("src", previewUrl).removeClass("hidden");
-            }, 100); // Correspond à la durée de la transition
+                $(".miniature img").attr("src", apercuUrl).removeClass("hidden");
+            }, 200); // Correspond à la durée de la transition
         }
     });
 
@@ -25,7 +26,7 @@ jQuery(document).ready(function($) {
         // Attendre la fin de la transition avant de restaurer la miniature actuelle
         setTimeout(function() {
             $(".miniature img").attr("src", miniatureActuelle).removeClass("hidden");
-        }, 100);
+        }, 200);
     });
     
     // Lors du clic sur la flèche (optionnel)
