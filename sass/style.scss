@@ -307,6 +307,11 @@ body {
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
 }
+#single-photos {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
 .conteneur-photo {
     position: relative;
     display: flex;
@@ -741,6 +746,11 @@ body {
         flex-direction: column;
         padding: 0 80px;
     }
+    #single-photos {
+        display: flex;
+        flex-direction: column;
+        padding: 0 80px;
+    }
     .menu-secondaire {
         padding: 45px 0;
         & .nav {
@@ -839,6 +849,9 @@ body {
 @media only screen and (max-width: 600px) {
     #galerie-photos {
         padding: 0 30px;
+    }
+    #single-photos {
+        padding: 0 5px;
     }
 }
 @media only screen and (max-width: 480px) {

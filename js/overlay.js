@@ -1,3 +1,7 @@
+// Importation de la fonction d'ouverture de la Lightbox
+import { ouvertureLightbox } from "./lightbox.js";
+
+document.addEventListener("DOMContentLoaded", initialisationOverlay);
 
 // Fonction exportée utilisée pour attacher les évènements de clic
 export function initialisationOverlay() {
@@ -14,6 +18,7 @@ export function initialisationOverlay() {
             zoom.addEventListener("click", ouvertureLightbox);
         });
     }
+    
     // Redirection vers la page d'info de la photo au clic sur l'oeil
     function redirectionPhoto(event) {
         event.preventDefault();
@@ -27,10 +32,6 @@ export function initialisationOverlay() {
         }
     }
 
-    function ouvertureLightbox(event) {
-        event.preventDefault();
-        // Ici tu pourrais déclencher manuellement la lightbox.js si nécessaire
-    }
     // Application des évènements sur les photos existantes
     overlayPhoto();
     // Ces évènements de clic doivent être réappliqués 

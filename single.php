@@ -135,24 +135,29 @@ if ($requete_infos->have_posts()) {
 
     <section class="single-bas">
         <h2>VOUS AIMEREZ AUSSI</h2>
-		<div id="galerie-photos">
+		<div id="single-photos">
 			<?php
-			// Vérifie si $categories est un tableau (donc plusieurs données à traiter)
-			if (is_array($categories)) {
-				// Extrait les ID des catégories de la photo actuelle
-				$identifiants_categories = wp_list_pluck($categories, "term_id");
-				
+            // Récupération des catégories de la photo actuelle
+            $categories = wp_get_post_terms(get_the_ID(), "categ");
+			
+            // Vérifie si $categories est un tableau (donc plusieurs données à traiter)
+			if (is_array($categories) && !empty($categories)) {
+				// // Extrait les ID des catégories de la photo actuelle
+				// $identifiants_categories = wp_list_pluck($categories, "term_id");
+                // Extrait les slugs des catégories de la photo actuelle
+                $slugs_categories = wp_list_pluck($categories, "slug");
+
 				// Arguments pour récupérer 2 photos aléatoires de la même catégorie
 				$arguments = [
-					"post_type" => "photo", // Type de post à récupérer (dans ce cas, photo)
-					"posts_per_page" => 2, // Nombre de posts à afficher (ici, 2)
-					"orderby" => "rand", // Tri aléatoire des posts
+					"post_type" => "photo",
+					"posts_per_page" => 2,
+					"orderby" => "rand",
 					// Filtrer les photos par catégorie
 					"tax_query" => array(
 						array(
 							"taxonomy" => "categ", // Taxonomie à utiliser (ici, categ)
-							"field" => "term_id", // Champ à utiliser pour la taxonomie (ici, term_id)
-							"terms" => $identifiants_categories, // Identifiants des termes à filtrer (les catégories de la photo actuelle)
+							"field" => "slug", // On cible ici le slug des catégories
+							"terms" => $slugs_categories, // Slugs des termes à filtrer (les catégories de la photo actuelle)
 						),
 					),
 					"post__not_in" => array(get_the_ID()), // Exclut la photo actuelle de la requête

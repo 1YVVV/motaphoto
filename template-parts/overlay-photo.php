@@ -1,11 +1,10 @@
 <?php
 // Définition des variables avant l'intégration du template part
-// $titre = isset($titre) ? $titre : "Titre par défaut";
-// $categorie = isset($categorie) ? $categorie : "Catégorie par défaut";
+$titre = isset($titre) ? $titre : "Titre par défaut";
+$categorie = isset($categorie) ? $categorie : "Catégorie par défaut";
 
-// Récupération de l'ID de la photo, valeur par défaut 0
-// $photo_id = isset($photo_id) ? $photo_id : 0;
-
+// // Récupération de l'ID de la photo, valeur par défaut 0
+$photo_id = isset($photo_id) ? $photo_id : 0;
 // Récupération de l'URL de la page de la photo
 $data_url = esc_url(get_permalink($photo_id));
 // Récupération de la référence de la photo

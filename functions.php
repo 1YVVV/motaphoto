@@ -1,12 +1,12 @@
 <?php
 // Ajout du type module aux scripts spécifiques
 function add_script_type_module($tag, $handle, $src) {
-    if ('overlay' === $handle || 'filtres' === $handle) {
+    if ("overlay" === $handle || "filtres" === $handle || "lightbox" === $handle) {
         $tag = '<script src="' . esc_url($src) . '" type="module"></script>';
     }
     return $tag;
 }
-add_filter('script_loader_tag', 'add_script_type_module', 10, 3);
+add_filter("script_loader_tag", "add_script_type_module", 10, 3);
 
 // Chargement des styles et scripts
 function theme_enqueue_styles() {
@@ -16,12 +16,12 @@ function theme_enqueue_styles() {
     wp_enqueue_script("menu-burger", get_theme_file_uri("js/burger.js"), [], null, true);
     // Chargement des scripts du formulaire de contact
     wp_enqueue_script("formulaire-contact", get_theme_file_uri("js/formulaire-contact.js"), ["jquery"], 1.0, true);
+    // Chargement des scripts destinés aux filtres de la page d'accueil
+    wp_enqueue_script("filtres", get_theme_file_uri("js/filtres.js"), ["jquery", "overlay", "lightbox"], 1.0, true);
     // Chargement des scripts de l'overlay
-    wp_enqueue_script("overlay", get_theme_file_uri("js/overlay.js"), ["jquery"], 1.0, true);
+    wp_enqueue_script("overlay", get_theme_file_uri("js/overlay.js"), ["jquery", "lightbox"], 1.0, true);
     // Chargement des scripts de la lightbox
     wp_enqueue_script("lightbox", get_theme_file_uri("js/lightbox.js"), ["jquery"], 1.0, true);
-    // Chargement des scripts destinés aux filtres de la page d'accueil
-    wp_enqueue_script("filtres", get_theme_file_uri("js/filtres.js"), ["jquery", "overlay"], 1.0, true);
     // Chargement des scripts d'affichage des miniatures de la single page
     wp_enqueue_script("single-miniature", get_theme_file_uri("js/single-miniature.js"), ["jquery"], 1.0, true);
     // Localisation des scripts pour AJAX
@@ -29,12 +29,6 @@ function theme_enqueue_styles() {
         "ajax_url" => admin_url("admin-ajax.php"),
         "nonce" => wp_create_nonce("my_ajax_nonce")
     ));
-    // wp_localize_script('overlay', 'my_ajax_object', array(
-    //     'ajax_url' => admin_url('admin-ajax.php'),
-    //     'nonce' => wp_create_nonce('my_ajax_nonce')
-    // ));
-    // Chargement de Font Awesome
-    // wp_enqueue_style('font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css', array(), null);
 }
 add_action("wp_enqueue_scripts", "theme_enqueue_styles");
 

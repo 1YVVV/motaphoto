@@ -1,5 +1,6 @@
 // Importation de la fonction d'initialisation des événements d'overlay
 import { initialisationOverlay } from "./overlay.js";
+import { ouvertureLightbox } from "./lightbox.js";
 
 document.addEventListener("DOMContentLoaded", function() {
     // On appelle la fonction importée lors du chargement initial
@@ -8,28 +9,16 @@ document.addEventListener("DOMContentLoaded", function() {
     // Gestion des événements pour les éléments .conteneur-photo__overlay--zoom
     document.addEventListener("click", function(event) {
         if (event.target.closest(".conteneur-photo__overlay--zoom")) {
-            ouvertureLightbox(event);
+            ouvertureLightbox();
         }
     });
 
-
     // Selecteurs personnalisés
     jQuery(document).ready(function($) {
-        // Sélectionne toutes les options du filtre
-        const options = document.querySelectorAll('.select-filtre__liste-options .choix-option');
-        // Ajoute un événement de clic à chaque option
-        options.forEach(option => {
-            option.addEventListener('click', function() {
-                // Enlève la classe 'selected' de toutes les options
-                options.forEach(opt => opt.classList.remove('selected'));
-                // Ajoute la classe 'selected' à l'option cliquée
-                this.classList.add('selected');
-            });
-        });
+        const selecteursFiltres  = document.querySelectorAll(".select-filtre");
 
-        const filtre = document.querySelectorAll(".select-filtre"); 
         // Initialisation des filtres
-        filtre.forEach(select => {
+        selecteursFiltres .forEach(select => {
             const optionAffichee = select.querySelector(".select-filtre__option");
             const options = select.querySelectorAll(".choix-option");
             
@@ -50,22 +39,22 @@ document.addEventListener("DOMContentLoaded", function() {
                 option.addEventListener("click", function() {
                     const valeurSelection = this.getAttribute("data-value");
 
+                    // Réinitialiser les autres sélections pour ce filtre
+                    options.forEach(opt => opt.classList.remove("selected"));
+
                     // Réinitialisation du filtre si l'option "Aucun" est sélectionnée
                     if (valeurSelection === "") {
                         // Trouve le texte du label par défaut pour ce filtre
                         const label = select.querySelector(".select-filtre__option span").getAttribute("data-label");
                         // Affiche le label par défaut
                         optionAffichee.querySelector("span").textContent = label || "Sélectionner";
-                        // Retirer toutes les sélections
-                        options.forEach(opt => opt.classList.remove("selected"));
                     } else {
                         // Afficher la nouvelle option sélectionnée
                         optionAffichee.querySelector("span").textContent = this.textContent;
-                        options.forEach(opt => opt.classList.remove("selected"));
                         this.classList.add("selected");
                     }
                     
-                    // Fermer le menu déroulant
+                    // Fermer le menu déroulant après la sélection
                     select.classList.remove("open");
                     
                     // Appeler la fonction pour mettre à jour les photos lors de la sélection du filtre
@@ -102,6 +91,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     page: page // Envoie la page actuelle
                 },
                 success: function(reponse) {
+                    // console.log("Réponse du serveur:", reponse);
                     if (reponse.success) {
                         if (page === 1) {
                             // Remplace les photos si on réinitialise la page
@@ -116,7 +106,7 @@ document.addEventListener("DOMContentLoaded", function() {
                         initialisationOverlay();
 
                         // Réinitialise la lightbox pour les nouvelles photos
-                        lightbox();
+                        ouvertureLightbox();
 
                     } else {
                         if (page === 1) {
@@ -132,5 +122,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 }
             });
         }
+
+        // Appel initial pour appliquer les filtres par défaut
+        updatePhotos();
     });
 });
